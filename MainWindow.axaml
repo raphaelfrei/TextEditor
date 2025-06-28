@@ -1,0 +1,231 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avaloniaEdit="https://github.com/avaloniaui/avaloniaedit"
+        mc:Ignorable="d" d:DesignWidth="1200" d:DesignHeight="700"
+        x:Class="TextEditor.MainWindow"
+        Title="Text Editor"
+        MinWidth="800" MinHeight="600">
+    
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto">
+        
+        <!-- Menu Bar -->
+        <Menu Grid.Row="0" Background="#F8F9FA" BorderBrush="#E1E5E9" BorderThickness="0,0,0,1">
+            <MenuItem Header="_File" Padding="8,4" FontSize="12">
+                <MenuItem Header="_New" InputGesture="Ctrl+N" Click="NewFile_Click" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="📄" FontSize="11"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Open..." InputGesture="Ctrl+O" Click="OpenFile_Click" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="📁" FontSize="11"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="_Save" InputGesture="Ctrl+S" Click="SaveFile_Click" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="💾" FontSize="11"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save _As..." InputGesture="Ctrl+Shift+S" Click="SaveFileAs_Click" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="📋" FontSize="11"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="_Close Tab" InputGesture="Ctrl+W" Click="CloseTab_Click" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="❌" FontSize="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <!-- PENDING IMPLEMENTATION
+            <MenuItem Header="_Edit" Padding="8,4" FontSize="12">
+                <MenuItem Header="_Undo" InputGesture="Ctrl+Z" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="↶" FontSize="11"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Redo" InputGesture="Ctrl+Y" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="↷" FontSize="11"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Cu_t" InputGesture="Ctrl+X" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="✂️" FontSize="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Copy" InputGesture="Ctrl+C" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="📋" FontSize="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Paste" InputGesture="Ctrl+V" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="📄" FontSize="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="_Find..." InputGesture="Ctrl+F" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="🔍" FontSize="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            
+            <MenuItem Header="_View" Padding="8,4" FontSize="12">
+                <MenuItem Header="Zoom _In" InputGesture="Ctrl+OemPlus" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="🔍" FontSize="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Zoom _Out" InputGesture="Ctrl+OemMinus" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="🔍" FontSize="9"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Reset Zoom" InputGesture="Ctrl+0" FontSize="12">
+                    <MenuItem.Icon>
+                        <TextBlock Text="↺" FontSize="10"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            -->
+        </Menu>
+        
+        <!-- Toolbar -->
+        <Border Grid.Row="1" Background="#FFFFFF" BorderBrush="#E1E5E9" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Margin="6,2">
+                <Button Content="📄" ToolTip.Tip="New File (Ctrl+N)" 
+                        Margin="1" Padding="6,3" Click="NewFile_Click"
+                        FontSize="11"
+                        Background="Transparent" BorderThickness="1" BorderBrush="#E1E5E9"/>
+                <Button Content="📁" ToolTip.Tip="Open File (Ctrl+O)" 
+                        Margin="1" Padding="6,3" Click="OpenFile_Click"
+                        FontSize="11"
+                        Background="Transparent" BorderThickness="1" BorderBrush="#E1E5E9"/>
+                <Button Content="💾" ToolTip.Tip="Save File (Ctrl+S)" 
+                        Margin="1" Padding="6,3" Click="SaveFile_Click"
+                        FontSize="11"
+                        Background="Transparent" BorderThickness="1" BorderBrush="#E1E5E9"/>
+                <!-- 
+                <Separator Margin="6,1" Width="1" Background="#E1E5E9"/>
+                
+                <Button Content="↶" ToolTip.Tip="Undo (Ctrl+Z)" 
+                        Margin="1" Padding="6,3"
+                        FontSize="11"
+                        Background="Transparent" BorderThickness="1" BorderBrush="#E1E5E9"/>
+                <Button Content="↷" ToolTip.Tip="Redo (Ctrl+Y)" 
+                        Margin="1" Padding="6,3"
+                        FontSize="11"
+                        Background="Transparent" BorderThickness="1" BorderBrush="#E1E5E9"/>
+                
+                <Separator Margin="6,1" Width="1" Background="#E1E5E9"/>
+                
+                <Button Content="🔍" ToolTip.Tip="Find (Ctrl+F)" 
+                        Margin="1" Padding="6,3"
+                        FontSize="11"
+                        Background="Transparent" BorderThickness="1" BorderBrush="#E1E5E9"/>
+                -->
+            </StackPanel>
+        </Border>
+        
+        <!-- Tab Bar -->
+        <Border Grid.Row="2" Background="#F8F9FA" BorderBrush="#E1E5E9" BorderThickness="0,0,0,1" Padding="0">
+            <TabControl x:Name="FileTabControl" 
+                    SelectionChanged="TabControl_SelectionChanged"
+                    Background="Transparent"
+                    Margin="0"
+                    MaxHeight="25"
+                    Padding="0">
+                <TabControl.Styles>
+                    <Style Selector="TabItem">
+                        <Setter Property="Padding" Value="6,1"/>
+                        <Setter Property="FontSize" Value="11"/>
+                        <Setter Property="Margin" Value="1,0,1,0"/>
+                        <Setter Property="Background" Value="#E9ECEF"/>
+                        <Setter Property="BorderBrush" Value="#DEE2E6"/>
+                        <Setter Property="BorderThickness" Value="1,1,0,0"/>
+                        <Setter Property="CornerRadius" Value="3,3,0,0"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                    <Style Selector="TabItem:selected">
+                        <Setter Property="Background" Value="#FFFFFF"/>
+                        <Setter Property="BorderBrush" Value="#E1E5E9"/>
+                    </Style>
+                    <Style Selector="TabItem:pointerover">
+                        <Setter Property="Background" Value="#F1F3F4"/>
+                    </Style>
+                </TabControl.Styles>
+            </TabControl>
+        </Border>
+        
+        <!-- Main Editor Area -->
+        <Border Grid.Row="3" Background="#FFFFFF" BorderBrush="#E1E5E9" BorderThickness="1,0,1,1">
+            <avaloniaEdit:TextEditor x:Name="TxtEditor"
+                            FontFamily="'SF Mono', 'Monaco', 'Consolas', 'Liberation Mono', monospace"
+                            FontSize="12"
+                            Margin="10"
+                            ShowLineNumbers="True"
+                            Background="#FFFFFF"
+                            Foreground="#212529"
+                            LineNumbersForeground="#6C757D"
+                            WordWrap="False"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
+                <avaloniaEdit:TextEditor.Options>
+                    <avaloniaEdit:TextEditorOptions ShowSpaces="False"
+                                           ShowTabs="False"
+                                           ShowEndOfLine="False"
+                                           IndentationSize="4"
+                                           ConvertTabsToSpaces="True"/>
+                </avaloniaEdit:TextEditor.Options>
+            </avaloniaEdit:TextEditor>
+        </Border>
+        
+        <!-- Status Bar -->
+        <Border Grid.Row="4" Background="#F8F9FA" BorderBrush="#E1E5E9" BorderThickness="0,1,0,0">
+            <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+                <TextBlock Grid.Column="0" x:Name="StatusText" 
+                          Text="Ready" 
+                          VerticalAlignment="Center" 
+                          Margin="8,2"
+                          FontSize="11"
+                          Foreground="#6C757D"/>
+                
+                <TextBlock Grid.Column="1" x:Name="LineColumnText" 
+                          Text="Ln 1, Col 1" 
+                          VerticalAlignment="Center" 
+                          Margin="8,2"
+                          FontSize="11"
+                          Foreground="#6C757D"/>
+                
+                <TextBlock Grid.Column="2" x:Name="EncodingText" 
+                          Text="UTF-8" 
+                          VerticalAlignment="Center" 
+                          Margin="8,2"
+                          FontSize="11"
+                          Foreground="#6C757D"/>
+                
+                <TextBlock Grid.Column="3" x:Name="FileTypeText" 
+                          Text="Plain Text" 
+                          VerticalAlignment="Center" 
+                          Margin="8,2"
+                          FontSize="11"
+                          Foreground="#6C757D"/>
+                
+                <TextBlock Grid.Column="4" x:Name="ZoomText" 
+                          Text="100%" 
+                          VerticalAlignment="Center" 
+                          Margin="8,2"
+                          FontSize="11"
+                          Foreground="#6C757D"/>
+            </Grid>
+        </Border>
+        
+    </Grid>
+</Window>
